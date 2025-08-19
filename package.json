@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "dev": "tsc --b && node ./dist/server.js"
+    "dev": "tsc --b && node ./dist/server.js",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
   },
   "keywords": [],
   "author": "",
@@ -11,5 +13,11 @@
   "description": "",
   "dependencies": {
     "typescript": "^5.9.2"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.33.0",
+    "eslint": "^9.33.0",
+    "globals": "^16.3.0",
+    "typescript-eslint": "^8.40.0"
   }
 }
