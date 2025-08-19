@@ -16,6 +16,7 @@ export async function ConnectedToDB() {
   try {
     await pgClient.connect();
     console.log("connected to database");
+    // here goes the basic crud for postgres using pg-client
     // const response = await pgClient.query("SELECT * FROM users;");
     const response = await pgClient.query(
       "update users set username='rose mishra' where id='1'",
