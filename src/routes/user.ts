@@ -14,6 +14,8 @@ userRouter.post("/sign-up", async (req: Request, res: Response) => {
   const pincode = req.body.pincode;
   // RETURNING id must be here
   const insertQuery = `INSERT INTO users (username, email, password) VALUES ($1, $2, $3) RETURNING id`;
+  const addressInsertQuery = `INSERT INTO addresses (city, country, street, pincode, user_id) VALUES ($1, $2, $3, $4, $5)`;
+  await pgClient.query("BEGIN;");
   const response = await pgClient.query(insertQuery, [
     username,
     email,
@@ -21,7 +23,8 @@ userRouter.post("/sign-up", async (req: Request, res: Response) => {
   ]);
   //perform console.log(userId) to understand
   const userId = response.rows[0].id;
-  const addressInsertQuery = `INSERT INTO addresses (city, country, street, pincode, user_id) VALUES ($1, $2, $3, $4, $5)`;
+
+  await new Promise((x) => setTimeout(x, 100 * 1000)); //stops the control of this line for 100 seconds
 
   await pgClient.query(addressInsertQuery, [
     city,
@@ -30,6 +33,8 @@ userRouter.post("/sign-up", async (req: Request, res: Response) => {
     pincode,
     userId,
   ]);
+
+  await pgClient.query("COMMIT;");
 
   res.json({
     message: "you have signed up",
